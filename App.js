@@ -12,6 +12,7 @@ import {
   Picker,
 } from 'react-native';
 import { styles } from './src/assets/styles/main';
+import { ExpenseForms } from './src/components/expenseForm';
 import {
   Container,
   Header,
@@ -44,27 +45,24 @@ export default class App extends Component<{}> {
                     expenses: [],
                     expensesSequence: 0
                   };
-
     // bind
-    this.changeText = this.changeText.bind(this);
     // this.changePrice = this.changePrice.bind(this);
     // this.changeFreq = this.changeFreq.bind(this);
     // this.spanChange = this.spanChange.bind(this);
-    this.saveExpense = this.saveExpense.bind(this);
+    // this.saveExpense = this.saveExpense.bind(this);
   }
-  changeText(event){
-    this.setState({inputText: event.value})
+  changeText(value){
+    this.setState({inputText: value})
   }
-  // changePrice(event){
-  //   this.setState({inputPrice: event.value})
-  //   this.setState({taxIncluded: event.value * 1.08})
-  // }
-  // changeFreq(event){
-  //   this.setState({inputFreq: event.value})
-  // }
-  // spanChange(event){
-  //   this.setState({selectSpan: event.value})
-  // }
+  changePrice(value){
+    this.setState({inputPrice: value})
+  }
+  changeFreq(value){
+    this.setState({inputFreq: value})
+  }
+  changeSpan(value){
+    this.setState({selectSpan: value})
+  }
   saveExpense(){
     this.setState({
       expensesSequence: this.state.expensesSequence++,
@@ -91,26 +89,15 @@ export default class App extends Component<{}> {
               </Title>
             </Body>
           </Header>
-          <Text>項目</Text>
-          <TextInput value={this.state.inputText} onChangeText={this.changeText} />
-          <Text>金額</Text>
-          <Picker onValueChange={(itemValue, itemIndex) => this.setState({inputPrice: itemValue})} selectedValue={this.state.inputPrice}>
-            <Picker.Item label="1" value={1} />
-            <Picker.Item label="2" value={2} />
-            <Picker.Item label="3" value={3} />
-          </Picker>
-          <Picker selectedValue={this.state.selectSpan} onValueChange={(itemValue, itemIndex) => this.setState({selectSpan: itemValue})} >
-            <Picker.Item label="毎日" value='1' />
-            <Picker.Item label="毎週" value='2' />
-            <Picker.Item label="毎月" value='3' />
-          </Picker>
-          <Sample nowInput={this.state.inputText}/>
-          <Text>回数</Text>
-          <Picker onValueChange={(itemValue, itemIndex) => this.setState({inputFreq: itemValue})} selectedValue={this.state.inputFreq}>
-            <Picker.Item label="1" value={1} />
-            <Picker.Item label="2" value={2} />
-            <Picker.Item label="3" value={3} />
-          </Picker>
+          <ExpenseForms
+            inputText={this.state.inputText}
+            inputPrice={this.state.inputPrice}
+            inputFreq={this.state.inputFreq}
+            changeText={this.changeText.bind(this)}
+            changePrice={this.changePrice.bind(this)}
+            changeSpan={this.changeSpan.bind(this)}
+            changeFreq={this.changeFreq.bind(this)}
+          />
           <TaxIncludedPrice price={this.state.taxIncluded}/>
           <ExpenseInWeek price={this.state.inputPrice} span={this.state.selectSpan} freq={this.state.inputFreq}/>
           <ExpenseInMonth price={this.state.inputPrice} span={this.state.selectSpan} freq={this.state.inputFreq}/>
@@ -123,12 +110,6 @@ export default class App extends Component<{}> {
       </Container>
     );
   }
-}
-
-const Sample = props =>{
-  return (
-    <Text>{props.nowInput}</Text>
-  )
 }
 
 const TaxIncludedPrice = props =>{
