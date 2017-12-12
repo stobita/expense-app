@@ -3,7 +3,8 @@ import {
   View
 } from 'react-native'
 import {
-  Text
+  Text,
+  Separator
 } from 'native-base';
 
 export class ExpenseList extends React.Component{
@@ -15,7 +16,7 @@ export class ExpenseList extends React.Component{
         <Text>期間</Text>
         <Text>回数</Text>
         {this.props.expenses.map((expense) =>
-          <ExpenseItem value={expense} key={expense['id']}/>
+          <ExpenseItem expense={expense} key={expense['id']}/>
         )}
       </View>
     )
@@ -25,10 +26,12 @@ export class ExpenseList extends React.Component{
 const ExpenseItem = props =>{
   return (
     <View>
-      <Text>{props.value['name']}</Text>
-      <Text>{props.value['price']}</Text>
-      <Text>{spanText(props.value['span'])}</Text>
-      <Text>{props.value['freq']}</Text>
+      <Separator>
+        <Text>{props.expense['name']}</Text>
+      </Separator>
+      <Text>{props.expense['price']}</Text>
+      <Text>{spanText(props.expense['span'])}</Text>
+      <Text>{props.expense['freq']}</Text>
     </View>
   )
   function spanText(key){

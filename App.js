@@ -40,7 +40,7 @@ export default class App extends Component<{}> {
                     inputText: '',
                     inputPrice: 0,
                     taxIncluded: '',
-                    selectSpan: '1',
+                    selectSpan: 1,
                     inputFreq: 1,
                     expenses: [],
                     expensesSequence: 0
@@ -93,6 +93,7 @@ export default class App extends Component<{}> {
             inputText={this.state.inputText}
             inputPrice={this.state.inputPrice}
             inputFreq={this.state.inputFreq}
+            selectSpan={this.state.selectSpan}
             changeText={this.changeText.bind(this)}
             changePrice={this.changePrice.bind(this)}
             changeSpan={this.changeSpan.bind(this)}
